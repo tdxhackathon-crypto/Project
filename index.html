@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Salesforce Embedded Service – Google Kutta</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+<body>
+  <h1>Salesforce Embedded Service – Test</h1>
+
+  <script>
+    window.embedded_svc = window.embedded_svc || {};
+    embedded_svc.settings = embedded_svc.settings || {};
+
+    embedded_svc.settings.displayHelpButton = true;
+    embedded_svc.settings.language = "en";
+
+    // Optional: hidden values you want to pass
+    embedded_svc.settings.extraPrechatFormDetails = [
+      { label: "Source", value: "Google Hosted Page", displayToAgent: true },
+      { label: "Page URL", value: window.location.href, displayToAgent: true }
+    ];
+
+    // ======= REPLACE THESE PLACEHOLDERS FROM YOUR DEPLOYMENT =======
+    const MY_DOMAIN = "https://YOUR_MY_DOMAIN.my.salesforce.com";
+    const COMMUNITY_URL = "https://YOUR_COMMUNITY.force.com";
+    const ORG_ID = "00DXXXXXXXXXXXX";
+    const DEPLOYMENT_NAME = "YOUR_DEPLOYMENT_NAME";
+    const BASE_LIVE_AGENT_CONTENT_URL = "https://XXXX.salesforceliveagent.com/content";
+    const BASE_LIVE_AGENT_URL = "https://XXXX.salesforceliveagent.com/chat";
+    const DEPLOYMENT_ID = "572XXXXXXXXXXXX";
+    const BUTTON_ID = "573XXXXXXXXXXXX";
+    const ESW_LIVE_AGENT_DEV_NAME = "EmbeddedServiceLiveAgent_Parent0XXXXXXXX";
+    // ===============================================================
+
+    function initESW(gslbBaseUrl) {
+      embedded_svc.init(
+        MY_DOMAIN,
+        COMMUNITY_URL,
+        gslbBaseUrl,
+        ORG_ID,
+        DEPLOYMENT_NAME,
+        {
+          baseLiveAgentContentURL: BASE_LIVE_AGENT_CONTENT_URL,
+          deploymentId: DEPLOYMENT_ID,
+          buttonId: BUTTON_ID,
+          baseLiveAgentURL: BASE_LIVE_AGENT_URL,
+          eswLiveAgentDevName: ESW_LIVE_AGENT_DEV_NAME,
+          isOfflineSupportEnabled: true
+        }
+      );
+    }
+
+    (function () {
+      if (!window.embedded_svc || !window.embedded_svc.init) {
+        var s = document.createElement("script");
+        s.src = MY_DOMAIN + "/embeddedservice/5.0/esw.min.js";
+        s.onload = function () { initESW(null); };
+        document.body.appendChild(s);
+      } else {
+        initESW("https://service.force.com");
+      }
+    })();
+  </script>
+<script type='text/javascript'>
+	function initEmbeddedMessaging() {
+		try {
+			embeddedservice_bootstrap.settings.language = 'en_US'; // For example, enter 'en' or 'en-US'
+
+			embeddedservice_bootstrap.init(
+				'00Dbb00000378FF',
+				'AMI_Entertainment_Embedded_Service_Deployment',
+				'https://ami--agentforce.sandbox.my.site.com/ESWAMIEntertainmentEmbe1752170105264',
+				{
+					scrt2URL: 'https://ami--agentforce.sandbox.my.salesforce-scrt.com'
+				}
+			);
+		} catch (err) {
+			console.error('Error loading Embedded Messaging: ', err);
+		}
+	};
+</script>
+<script type='text/javascript' src='https://ami--agentforce.sandbox.my.site.com/ESWAMIEntertainmentEmbe1752170105264/assets/js/bootstrap.min.js' onload='initEmbeddedMessaging()'></script>
+</body>
+</html>
